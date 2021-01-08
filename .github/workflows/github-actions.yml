@@ -9,10 +9,12 @@ jobs:
     - uses: actions/setup-node@v1
     - run: npm install
     - run: npm install -g aws-cdk
+    - run: cdk synth
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+    - run: cdk diff
     - run: cdk deploy --require-approval never

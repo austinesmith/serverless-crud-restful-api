@@ -42,7 +42,7 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
     // create
     const createLambda = new lambda.Function(this, 'createItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambda-handler'),
+      code: lambda.Code.fromAsset('lambdas'),
       handler: 'function.handler',
       environment: {
         MYDDB_TABLE_NAME: table.tableName,
@@ -53,7 +53,7 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
     // read
     const readLambda = new lambda.Function(this, 'readItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambda-handler'),
+      code: lambda.Code.fromAsset('lambdas'),
       handler: 'function.handler',
       environment: {
         MYDDB_TABLE_NAME: table.tableName,
@@ -64,7 +64,7 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
     // update
     const updateLambda = new lambda.Function(this, 'updateItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambda-handler'),
+      code: lambda.Code.fromAsset('lambdas'),
       handler: 'function.handler',
       environment: {
         MYDDB_TABLE_NAME: table.tableName,
@@ -75,7 +75,7 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
     // delete
     const deleteLambda = new lambda.Function(this, 'deleteItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambda-handler'),
+      code: lambda.Code.fromAsset('lambdas'),
       handler: 'function.handler',
       environment: {
         MYDDB_TABLE_NAME: table.tableName,

@@ -43,7 +43,7 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
     const createLambda = new lambda.Function(this, 'createItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
-      handler: 'function.handler',
+      handler: 'create.handler',
       environment: {
         MYDDB_TABLE_NAME: table.tableName,
         PRIMARY_KEY: 'id'
@@ -83,7 +83,19 @@ export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
       },
     });
 
+    // read all
+    const readAllLambda = new lambda.Function(this, 'readAllItems', {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      code: lambda.Code.fromAsset('lambdas'),
+      handler: 'function.handler',
+      environment: {
+        MYDDB_TABLE_NAME: table.tableName,
+        PRIMARY_KEY: 'id'
+      },
+    });
+
     // update permission policys
+    table.grantReadData(readAllLambda);
     table.grantReadWriteData(createLambda);
     table.grantReadWriteData(readLambda);
     table.grantReadWriteData(updateLambda);

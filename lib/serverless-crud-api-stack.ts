@@ -3,7 +3,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as apigw from '@aws-cdk/aws-apigateway';
 
-export class CdkApigatewayLambdaDynamodbStack extends cdk.Stack {
+export class ServerlessCrudApiStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 

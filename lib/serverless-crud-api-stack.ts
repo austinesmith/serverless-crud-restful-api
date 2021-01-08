@@ -8,75 +8,74 @@ export class ServerlessCrudApiStack extends cdk.Stack {
     super(scope, id, props);
 
     // DYNAMODB 
-      // provision Dynamodb table https://docs.aws.amazon.com/cdk/api/latest/docs/aws-dynamodb-readme.html
+      // provision Dynamodb table
     const table = new dynamodb.Table(this, "MyDDB", {
       partitionKey: { 
         name: 'id', 
         type: dynamodb.AttributeType.STRING
       },
       tableName: 'items',
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     // LAMBDA
-      // create: POST <URL>/items
+      // Create: POST <URL>/items
     const createLambda = new lambda.Function(this, 'createItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
       handler: 'create.handler',
       environment: {
-        MYDDB_TABLE_NAME: table.tableName,
+        TABLE_NAME: table.tableName,
         PRIMARY_KEY: 'id'
       },
     });
-    // read
+      // Read
     const readLambda = new lambda.Function(this, 'readItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
-      handler: 'function.handler',
+      handler: 'read.handler',
       environment: {
-        MYDDB_TABLE_NAME: table.tableName,
+        TABLE_NAME: table.tableName,
         PRIMARY_KEY: 'id'
       },
     });
-    // update
+      // Update
     const updateLambda = new lambda.Function(this, 'updateItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
-      handler: 'function.handler',
+      handler: 'update.handler',
       environment: {
-        MYDDB_TABLE_NAME: table.tableName,
+        TABLE_NAME: table.tableName,
         PRIMARY_KEY: 'id'
       },
     });
-    // delete
+      // Delete
     const deleteLambda = new lambda.Function(this, 'deleteItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
-      handler: 'function.handler',
+      handler: 'delete.handler',
       environment: {
-        MYDDB_TABLE_NAME: table.tableName,
+        TABLE_NAME: table.tableName,
         PRIMARY_KEY: 'id'
       },
     });
-    // read all
+      // Read All: 
     const readAllLambda = new lambda.Function(this, 'readAllItems', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
-      handler: 'function.handler',
+      handler: 'read-all.handler',
       environment: {
-        MYDDB_TABLE_NAME: table.tableName,
-        PRIMARY_KEY: 'id'
+        TABLE_NAME: table.tableName
       },
     });
 
     // PERMISSIONS
       // update IAM roles/policys
+    table.grantWriteData(createLambda);
+    table.grantReadData(readLambda);
+    table.grantWriteData(updateLambda);
+    table.grantWriteData(deleteLambda);
     table.grantReadData(readAllLambda);
-    table.grantReadWriteData(createLambda);
-    table.grantReadWriteData(readLambda);
-    table.grantReadWriteData(updateLambda);
-    table.grantReadWriteData(deleteLambda);
 
     // API GATEWAY
       // provision API Gateway
@@ -84,20 +83,23 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       restApiName: 'CRUD API'
     });
       // add resources to API Gateway
-    const multipleItems = api.root.addResource('items');
-    const singleItem = multipleItems.addResource('{id}');
+    const everyItem = api.root.addResource('items');
+    const oneItem = everyItem.addResource('{id}');
       // add methods to API Gateway
         // C
     const createLambdaIntegration = new apigw.LambdaIntegration(createLambda);
-    multipleItems.addMethod('POST', createLambdaIntegration);
+    everyItem.addMethod('POST', createLambdaIntegration);
         // R
     const readLambdaIntegration = new apigw.LambdaIntegration(readLambda);
-    singleItem.addMethod('GET', readLambdaIntegration);
+    oneItem.addMethod('GET', readLambdaIntegration);
         // U
     const updateLambdaIntegration = new apigw.LambdaIntegration(updateLambda);
-    singleItem.addMethod('PATCH', updateLambdaIntegration);
+    oneItem.addMethod('PATCH', updateLambdaIntegration);
         // D
     const deleteLambdaIntegration = new apigw.LambdaIntegration(deleteLambda);
-    singleItem.addMethod('DELETE', deleteLambdaIntegration);
+    oneItem.addMethod('DELETE', deleteLambdaIntegration);
+        // read all
+    const readAllLambdaIntegration = new apigw.LambdaIntegration(readAllLambda);
+    everyItem.addMethod('Get', readAllLambdaIntegration);
   };
 }

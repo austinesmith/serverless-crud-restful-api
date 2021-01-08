@@ -15,7 +15,7 @@ export const handler = async (event: any = {}) => {
     };
     try {
         await db.put(parameters);
-        return { statusCode: 201, body: '' };
+        return { statusCode: 201, body: 'item added' };
     } catch (dbError) {
         return { statusCode: 500, body: dbError.code };
     }

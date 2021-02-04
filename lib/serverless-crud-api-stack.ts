@@ -29,7 +29,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
         PRIMARY_KEY: 'id'
       },
     });
-      // Read
+      // Read: GET <URL>/items/{id}
     const readLambda = new lambda.Function(this, 'readItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
@@ -39,7 +39,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
         PRIMARY_KEY: 'id'
       },
     });
-      // Update
+      // Update: PATCH <URL>/items/{id}
     const updateLambda = new lambda.Function(this, 'updateItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
@@ -49,7 +49,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
         PRIMARY_KEY: 'id'
       },
     });
-      // Delete
+      // Delete: DELETE <URL>/items/{id}
     const deleteLambda = new lambda.Function(this, 'deleteItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
@@ -59,7 +59,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
         PRIMARY_KEY: 'id'
       },
     });
-      // Read All: 
+      // Read All: GET <URL>/items
     const readAllLambda = new lambda.Function(this, 'readAllItems', {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset('lambdas'),
@@ -100,6 +100,6 @@ export class ServerlessCrudApiStack extends cdk.Stack {
     oneItem.addMethod('DELETE', deleteLambdaIntegration);
         // read all
     const readAllLambdaIntegration = new apigw.LambdaIntegration(readAllLambda);
-    everyItem.addMethod('Get', readAllLambdaIntegration);
+    everyItem.addMethod('GET', readAllLambdaIntegration);
   };
 }

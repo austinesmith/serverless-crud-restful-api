@@ -4,9 +4,10 @@ const aws = require('aws-sdk');
 const db = new aws.DynamoDB.DocumentClient();
 
 /* READ */
-export const handler = async (event: any = {}) => {
+export const handler = async (event: any = {}): Promise <any> => {
+
     const requestItemId = event.pathParameters.id;
-    if (!requestItemId) {
+    if ( !requestItemId ) {
         return { statusCode: 400, body: 'error: missing item id' };
     }
     const parameters = {
@@ -15,9 +16,15 @@ export const handler = async (event: any = {}) => {
             [PRIMARY_KEY]: requestItemId
         }
     };
+
     try {
-        return { statusCode: 200, body: JSON.stringify(await db.get(parameters).Item) };
-    } catch (dbError) {
-        return { statusCode: 500, body: JSON.stringify(dbError) };
+
+        const response = await db.get(parameters).promise();
+        return { statusCode: 200, body: JSON.stringify( response.Item ) };
+
+    } catch ( dbError ) {
+
+        return { statusCode: 500, body: JSON.stringify( dbError ) };
+
     }
 }

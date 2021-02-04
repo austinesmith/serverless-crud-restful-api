@@ -71,11 +71,11 @@ export class ServerlessCrudApiStack extends cdk.Stack {
 
     // PERMISSIONS
       // update IAM roles/policys
-    table.grantWriteData(createLambda);
-    table.grantReadData(readLambda);
-    table.grantWriteData(updateLambda);
-    table.grantWriteData(deleteLambda);
-    table.grantReadData(readAllLambda);
+    table.grantReadWriteData(createLambda);
+    table.grantReadWriteData(readLambda);
+    table.grantReadWriteData(updateLambda);
+    table.grantReadWriteData(deleteLambda);
+    table.grantReadWriteData(readAllLambda);
 
     // API GATEWAY
       // provision API Gateway

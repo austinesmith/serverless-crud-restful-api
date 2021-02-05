@@ -7,8 +7,9 @@ jobs:
    steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
-    - run: npm install
     - run: npm install -g aws-cdk
+    - run: npm install
+    - run: npm run install-lambda-modules
     - run: npm run build
     - run: cdk synth
     - name: Configure AWS Credentials

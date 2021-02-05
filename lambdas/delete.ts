@@ -19,8 +19,8 @@ export const handler = async (event: any = {}): Promise <any> => {
 
     try {
 
-        const response = await db.delete(parameters).promise();
-        return { statusCode: 200, body: JSON.stringify( response.Item ) };
+        await db.delete(parameters).promise();
+        return { statusCode: 200, body: 'request was successful and as a result, a resource has been deleted' };
 
     } catch (dbError) {
 

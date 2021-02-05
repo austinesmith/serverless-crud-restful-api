@@ -23,8 +23,9 @@ export const handler = async (event: any = {}) : Promise <any> => {
 
   try {
 
+    // 201
     await db.put(parameters).promise();
-    return { statusCode: 201, body: "item sucessfully added" };
+    return { statusCode: 201, body: "request was successful and as a result, a resource has been created" };
 
   } catch ( dbError ) {
 

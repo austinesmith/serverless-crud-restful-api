@@ -2,6 +2,10 @@ import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as apigw from '@aws-cdk/aws-apigateway';
+import * as r53 from '@aws-cdk/aws-route53';
+import { HostedZone } from '@aws-cdk/aws-route53';
+import { Certificate } from '@aws-cdk/aws-certificatemanager';
+import { BasePathMapping, DomainName } from '@aws-cdk/aws-apigateway';
 
 export class ServerlessCrudApiStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -101,5 +105,35 @@ export class ServerlessCrudApiStack extends cdk.Stack {
         // read all
     const readAllLambdaIntegration = new apigw.LambdaIntegration(readAllLambda);
     everyItem.addMethod('GET', readAllLambdaIntegration);
+
+    // api.url = rest api URL
+    // create domain for api
+    const CUSTOM_DOMAIN_NAME = 'crud.austinesmith.com';
+    const PROD_HOSTED_ZONE_ID = 'Z0782095OAXYIN3YIA1L';
+    const ZONE_NAME = 'austinesmith.com';
+    const ACM_CERTIFICATE_ARN = 'arn:aws:acm:us-east-1:055016422806:certificate/4ad6cc2d-2ae0-455a-8780-0898ab441528';
+
+    // custom domain for api
+    const customDomain = new DomainName(this, 'customDomain', {
+      domainName: CUSTOM_DOMAIN_NAME,
+      certificate: Certificate.fromCertificateArn(this, 'ACM_Certificate', ACM_CERTIFICATE_ARN),
+      endpointType: apigw.EndpointType.EDGE
+    });
+    new BasePathMapping(this, 'CustomBasePathMapping', {
+      domainName: customDomain,
+      restApi: api
+    });
+    // Get a reference to AN EXISTING hosted zone using the HOSTED_ZONE_ID. You can get this from route53
+    const hostedZone = HostedZone.fromHostedZoneAttributes(this, 'HostedZone', {
+      hostedZoneId: PROD_HOSTED_ZONE_ID,
+      zoneName: ZONE_NAME
+    });
+    // Finally, add a CName record in the hosted zone with a value of the new custom domain that was created above:
+    new r53.CnameRecord(this, 'ApiGatewayRecordSet', {
+      zone: hostedZone,
+      recordName: 'api',
+      domainName: customDomain.domainNameAliasDomainName
+    });
+    
   };
 }

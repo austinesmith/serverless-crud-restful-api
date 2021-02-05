@@ -9,6 +9,7 @@ jobs:
     - uses: actions/setup-node@v1
     - run: npm install
     - run: npm install -g aws-cdk
+    - run: npm build
     - run: cdk synth
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1

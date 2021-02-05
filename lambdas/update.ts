@@ -6,36 +6,31 @@ const docClient = new aws.DynamoDB.DocumentClient();
 /* UPDATE */
 export const handler = async (event: any = {}): Promise <any> => {
 
-    /*if (!event.body) {
+    // check for event request body
+    if (!event.body) {
         return { statusCode: 400, body: 'error: missing parameter body' };
-    }*/
-
-    const updateItemId = event.pathParameters.id;
-
-    /*if (!updateItemId) {
-        return { statusCode: 400, body: 'error: missing path parameter id' };
-    }*/
-
-    const Items: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
-
-    
-    /*const updateItemProps = Object.keys(updateItem);
-    if (!updateItem || updateItemProps.length < 1) {
-        return { statusCode: 400, body: 'error: missing args' };
     }
 
-    const firstProp = updateItemProps.splice(0,1);
-    console.log( firstProp );
-    const parameters: any = {
-        TableName: TABLE_NAME,
-        Key: {
-            [PRIMARY_KEY]: updateItemId
-        },
-        UpdateExpression: 'set #${firstProp} = :${firstProp}',
-        ExpressionAttributeValues: {},
-        ReturnValues: 'UPDATED_NEW'
-    }*/
+    // get primary key of item to be updated
+    const updateItemId = event.pathParameters.id;
 
+    // check that parameter id exists in event URL path
+    if (!updateItemId) {
+        return { statusCode: 400, body: 'error: missing path parameter id' };
+    }
+
+    // create object from event request body
+    const Items: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
+
+    // get array of keys from event request body object expression attributes
+    let attributes = Object.keys(Items);
+
+    // check that event request body contains at least one key/value pair
+    if (!Items || attributes.length < 1) {
+        return { statusCode: 400, body: 'error: missing request body' };
+    }
+
+    // initilize update expression
     const params: any = {
         TableName: TABLE_NAME,
         Key: {
@@ -47,15 +42,8 @@ export const handler = async (event: any = {}): Promise <any> => {
         ReturnValues: "UPDATED_NEW"
     };
 
-    /*parameters.ExpressionAttributeValues[':${firstProp}'] = updateItem['${firstProp}'];
-    updateItemProps.forEach(property => {
-        parameters.UpdateExpression += ', ${property} = :${property}';
-        parameters.ExpressionAttributeValues[':${property}'] = updateItem[property];
-    });
-    console.log(parameters);*/
-
+    // create expression dynamically
     let prefix = "set ";
-    let attributes = Object.keys(Items);
     for (let i=0; i<attributes.length; i++) {
         let attribute = attributes[i];
         if (attribute != updateItemId) {
@@ -66,7 +54,7 @@ export const handler = async (event: any = {}): Promise <any> => {
         }
     }
 
-
+    // update dynamodb table with new or updated attributes
     try {
         await docClient.update(params).promise();
         return { statusCode: 204, body: 'success: item updated' };

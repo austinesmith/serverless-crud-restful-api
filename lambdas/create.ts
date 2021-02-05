@@ -4,34 +4,31 @@ const {"v4": uuidv4} = require('uuid');
 const TABLE_NAME = process.env.TABLE_NAME || '';
 const PRIMARY_KEY = process.env.PRIMARY_KEY || '';
 
-const RESERVED_RESPONSE = `Error: AWS reserved keywords`;
-const DYNAMODB_EXECUTION_ERROR = `Error: Execution error of dynamodb`;
-
+/* CREATE */
 export const handler = async (event: any = {}) : Promise <any> => {
 
+  // check for event request body
   if (!event.body) {
     return { statusCode: 400, body: 'invalid request, missing parameter body' };
   }
 
+  // create object from event request body
   const item = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
 
+  // assign universally unique identifier to object
   item[PRIMARY_KEY] = uuidv4();
+
+  // create expression with object
   const parameters = {
     TableName: TABLE_NAME,
     Item: item
   };
 
+  // add new item to dynamodb table
   try {
-
-    // 201
     await db.put(parameters).promise();
-    return { statusCode: 201, body: "request was successful and as a result, a resource has been created" };
-
+    return { statusCode: 204, body: '' };
   } catch ( dbError ) {
-
-    const errorResponse = dbError.code === 'ValidationException' && dbError.message.includes('reserved keyword') ?
-    DYNAMODB_EXECUTION_ERROR : RESERVED_RESPONSE;
-    return { statusCode: 500, body: errorResponse };
-    
+    return { statusCode: 500, body: JSON.stringify(dbError) };
   }
 };

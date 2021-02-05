@@ -5,11 +5,16 @@ const db = new aws.DynamoDB.DocumentClient();
 
 /* READ */
 export const handler = async (event: any = {}): Promise <any> => {
+
+    // get primary key of item to be deleted
     const deleteItemId = event.pathParameters.id;
+
+    // check that parameter id exists in event URL path
     if (!deleteItemId) {
         return { statusCode: 400, body: 'error: missing parameter id' };
     }
 
+    // create expression for item to be deleted
     const parameters = {
         TableName: TABLE_NAME,
         Key: {
@@ -17,14 +22,11 @@ export const handler = async (event: any = {}): Promise <any> => {
         }
     };
 
+    // delete item from the dynamodb table
     try {
-
         await db.delete(parameters).promise();
-        return { statusCode: 200, body: 'request was successful and as a result, a resource has been deleted' };
-
-    } catch (dbError) {
-
+        return { statusCode: 204, body: '' };
+    } catch ( dbError ) {
         return { statusCode: 500, body: JSON.stringify( dbError ) };
-        
     }
 }

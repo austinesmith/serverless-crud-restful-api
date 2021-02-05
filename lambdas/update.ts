@@ -6,19 +6,20 @@ const docClient = new aws.DynamoDB.DocumentClient();
 /* UPDATE */
 export const handler = async (event: any = {}): Promise <any> => {
 
-    if (!event.body) {
+    /*if (!event.body) {
         return { statusCode: 400, body: 'error: missing parameter body' };
-    }
+    }*/
 
     const updateItemId = event.pathParameters.id;
-    if (!updateItemId) {
-        return { statusCode: 400, body: 'error: missing path parameter id' };
-    }
 
-    const updateItem: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
+    /*if (!updateItemId) {
+        return { statusCode: 400, body: 'error: missing path parameter id' };
+    }*/
+
+    const Items: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
 
     
-    const updateItemProps = Object.keys(updateItem);
+    /*const updateItemProps = Object.keys(updateItem);
     if (!updateItem || updateItemProps.length < 1) {
         return { statusCode: 400, body: 'error: missing args' };
     }
@@ -30,22 +31,46 @@ export const handler = async (event: any = {}): Promise <any> => {
         Key: {
             [PRIMARY_KEY]: updateItemId
         },
-        UpdateExpression: 'set ${firstProp} = :${firstProp}',
+        UpdateExpression: 'set #${firstProp} = :${firstProp}',
         ExpressionAttributeValues: {},
         ReturnValues: 'UPDATED_NEW'
-    }
+    }*/
 
-    parameters.ExpressionAttributeValues[':${firstProp}'] = updateItem['${firstProp}'];
+    const params: any = {
+        TableName: TABLE_NAME,
+        Key: {
+            [PRIMARY_KEY]: updateItemId
+        },
+        ExpressionAttributeValues: {},
+        ExpressionAttributeNames: {},
+        UpdateExpression: "",
+        ReturnValues: "UPDATED_NEW"
+    };
+
+    /*parameters.ExpressionAttributeValues[':${firstProp}'] = updateItem['${firstProp}'];
     updateItemProps.forEach(property => {
         parameters.UpdateExpression += ', ${property} = :${property}';
         parameters.ExpressionAttributeValues[':${property}'] = updateItem[property];
     });
-    console.log(parameters);
+    console.log(parameters);*/
+
+    let prefix = "set ";
+    let attributes = Object.keys(Items);
+    for (let i=0; i<attributes.length; i++) {
+        let attribute = attributes[i];
+        if (attribute != updateItemId) {
+            params["UpdateExpression"] += prefix + "#" + attribute + " = :" + attribute;
+            params["ExpressionAttributeValues"][":" + attribute] = Items[attribute];
+            params["ExpressionAttributeNames"]["#" + attribute] = attribute;
+            prefix = ", ";
+        }
+    }
+
 
     try {
-        await docClient.update(parameters).promise();
+        await docClient.update(params).promise();
         return { statusCode: 204, body: 'success: item updated' };
-    } catch (dbError) {
+    } catch ( dbError ) {
         return { statusCode: 500, body: 'Ddb error on update, code:' + dbError.code };
     }
 }

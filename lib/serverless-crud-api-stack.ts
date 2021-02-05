@@ -26,7 +26,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       // Create: POST <URL>/items
     const createLambda = new lambda.Function(this, 'createItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambdas'),
+      code: new lambda.AssetCode('lambdas'),
       handler: 'create.handler',
       environment: {
         TABLE_NAME: table.tableName,
@@ -36,7 +36,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       // Read: GET <URL>/items/{id}
     const readLambda = new lambda.Function(this, 'readItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambdas'),
+      code: new lambda.AssetCode('lambdas'),
       handler: 'read.handler',
       environment: {
         TABLE_NAME: table.tableName,
@@ -46,7 +46,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       // Update: PATCH <URL>/items/{id}
     const updateLambda = new lambda.Function(this, 'updateItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambdas'),
+      code: new lambda.AssetCode('lambdas'),
       handler: 'update.handler',
       environment: {
         TABLE_NAME: table.tableName,
@@ -56,7 +56,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       // Delete: DELETE <URL>/items/{id}
     const deleteLambda = new lambda.Function(this, 'deleteItem', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambdas'),
+      code: new lambda.AssetCode('lambdas'),
       handler: 'delete.handler',
       environment: {
         TABLE_NAME: table.tableName,
@@ -66,7 +66,7 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       // Read All: GET <URL>/items
     const readAllLambda = new lambda.Function(this, 'readAllItems', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset('lambdas'),
+      code: new lambda.AssetCode('lambdas'),
       handler: 'read-all.handler',
       environment: {
         TABLE_NAME: table.tableName
@@ -134,6 +134,6 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       recordName: 'api',
       domainName: customDomain.domainNameAliasDomainName
     });
-    
+
   };
 }

@@ -4,44 +4,51 @@ const aws = require('aws-sdk');
 const db = new aws.DynamoDB.DocumentClient();
 
 /* UPDATE */
-export const handler = async (event: any = {}): Promise <any> => {
 
-    if (!event.body) {
-        return { statusCode: 400, body: 'error: missing parameter body' };
-    }
 
-    const updateItemId = event.pathParameters.id;
-    if (!updateItemId) {
-        return { statusCode: 400, body: 'error: missing path parameter id' };
-    }
+const RESERVED_RESPONSE = `Error: You're using AWS reserved keywords as attributes`,
+  DYNAMODB_EXECUTION_ERROR = `Error: Execution update, caused a Dynamodb error, please take a look at your CloudWatch Logs.`;
 
-    const updateItem: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
-    const updateItemProps = Object.keys(updateItem);
-    if (!updateItem || updateItemProps.length < 1) {
-        return { statusCode: 400, body: 'error: missing args' };
-    }
+export const handler = async (event: any = {}) : Promise <any> => {
 
-    const firstProp = updateItemProps.splice(0,1);
-    const parameters: any = {
-        TableName: TABLE_NAME,
-        Key: {
-            [PRIMARY_KEY]: updateItemId
-        },
-        UpdateExpression: 'set ${firstProp} = :${firstProp}',
-        ExpressionAttributeValues: {},
-        ReturnValues: 'UPDATED_NEW'
-    }
+  if (!event.body) {
+    return { statusCode: 400, body: 'invalid request, you are missing the parameter body' };
+  }
 
-    parameters.ExpressionAttributeValues[':${firstProp}'] = updateItem['${firstProp}'];
-    updateItemProps.forEach(property => {
-        parameters.UpdateExpression += ', ${property} = :${property}';
-        parameters.ExpressionAttributeValues[':${property}'] = updateItem[property];
-    });
+  const editedItemId = event.pathParameters.id;
+  if (!editedItemId) {
+    return { statusCode: 400, body: 'invalid request, you are missing the path parameter id' };
+  }
 
-    try {
-        await db.update(parameters).promise();
-        return { statusCode: 204, body: 'success: item updated' };
-    } catch (dbError) {
-        return { statusCode: 500, body: 'Ddb error on update, code:' + dbError.code };
-    }
-}
+  const editedItem: any = typeof event.body == 'object' ? event.body : JSON.parse(event.body);
+  const editedItemProperties = Object.keys(editedItem);
+  if (!editedItem || editedItemProperties.length < 1) {
+      return { statusCode: 400, body: 'invalid request, no arguments provided' };
+  }
+
+  const firstProperty = editedItemProperties.splice(0,1);
+  const params: any = {
+      TableName: TABLE_NAME,
+      Key: {
+        [PRIMARY_KEY]: editedItemId
+      },
+      UpdateExpression: `set ${firstProperty} = :${firstProperty}`,
+      ExpressionAttributeValues: {},
+      ReturnValues: 'UPDATED_NEW'
+  }
+  params.ExpressionAttributeValues[`:${firstProperty}`] = editedItem[`${firstProperty}`];
+
+  editedItemProperties.forEach(property => {
+      params.UpdateExpression += `, ${property} = :${property}`;
+      params.ExpressionAttributeValues[`:${property}`] = editedItem[property];
+  });
+
+  try {
+    await db.update(params).promise();
+    return { statusCode: 204, body: 'request was received and understood, but that there is no need to return data' };
+  } catch (dbError) {
+    const errorResponse = dbError.code === 'ValidationException' && dbError.message.includes('reserved keyword') ?
+    DYNAMODB_EXECUTION_ERROR : RESERVED_RESPONSE;
+    return { statusCode: 500, body: errorResponse };
+  }
+};

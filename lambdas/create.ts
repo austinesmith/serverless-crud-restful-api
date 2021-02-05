@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient();
-const uuidv4 = require('uuid/v4');
+const {"v4": uuidv4} = require('uuid');
 const TABLE_NAME = process.env.TABLE_NAME || '';
 const PRIMARY_KEY = process.env.PRIMARY_KEY || '';
 
@@ -23,8 +23,8 @@ export const handler = async (event: any = {}) : Promise <any> => {
 
   try {
 
-    const response = await db.put(parameters).promise();
-    return { statusCode: 200, body: JSON.stringify( response.Item ) };
+    await db.put(parameters).promise();
+    return { statusCode: 201, body: "item sucessfully added" };
 
   } catch ( dbError ) {
 

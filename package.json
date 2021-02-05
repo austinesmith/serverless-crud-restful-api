@@ -1,9 +1,16 @@
 {
-  "name": "cdk-apigateway-lambda-dynamodb",
-  "version": "0.1.0",
+  "name": "crud-restful-api-full-serverless-application",
+  "version": "1.0.1",
+  "homepage": "https://austinesmith.com/",
+  "bugs": { 
+    "url" : "https://github.com/austinesmith/serverless-crud-restful-api",
+    "email": "austinfosec@gmail.com"
+    },
   "bin": {
     "cdk-apigateway-lambda-dynamodb": "bin/cdk-apigateway-lambda-dynamodb.js"
   },
+  "license": "ISC",
+  "author": "Austin Smith <austinfosec@gmail.com> (https://austinesmith.com)",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

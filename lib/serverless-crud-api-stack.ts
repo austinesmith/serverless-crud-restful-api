@@ -97,7 +97,14 @@ export class ServerlessCrudApiStack extends cdk.Stack {
    
       // provision API Gateway
     const api = new apigw.RestApi(this, 'crud-api', {
-      restApiName: 'CRUD API'
+      restApiName: 'CRUD API',
+      description: 'RESTful CRUD API',
+      deployOptions: {
+        // add throttling limits for security
+        stageName: 'dev',
+        throttlingRateLimit: 10,
+        throttlingBurstLimit: 2,
+      }
     });
       // add resources to API Gateway
     const everyItem = api.root.addResource('items');

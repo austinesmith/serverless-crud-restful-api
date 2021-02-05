@@ -2,10 +2,10 @@
   "name": "crud-restful-api-full-serverless-application",
   "version": "1.0.1",
   "homepage": "https://austinesmith.com/",
-  "bugs": { 
-    "url" : "https://github.com/austinesmith/serverless-crud-restful-api",
+  "bugs": {
+    "url": "https://github.com/austinesmith/serverless-crud-restful-api",
     "email": "austinfosec@gmail.com"
-    },
+  },
   "bin": {
     "cdk-apigateway-lambda-dynamodb": "bin/cdk-apigateway-lambda-dynamodb.js"
   },
@@ -13,27 +13,68 @@
   "author": "Austin Smith <austinfosec@gmail.com> (https://austinesmith.com)",
   "scripts": {
     "build": "tsc",
+    "build-vue": "cd frontend && vue-cli-service build && cd ..",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
     "deploy": "cdk deploy --require-approval never",
-    "install-lambda-modules": "cd lambdas && npm install && cd .."
+    "install-lambda-modules": "cd lambdas && npm install && cd ..",
+    "serve": "cd frontend && vue-cli-service serve"
   },
   "devDependencies": {
-    "aws-cdk": "1.76.0",
     "@aws-cdk/assert": "1.76.0",
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-service": "^4.5.11",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "aws-cdk": "1.76.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.0.0",
-    "typescript": "~3.9.7"
+    "typescript": "~3.9.7",
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.83.0",
     "@aws-cdk/aws-dynamodb": "^1.83.0",
     "@aws-cdk/aws-lambda": "^1.83.0",
     "@aws-cdk/aws-route53": "^1.88.0",
-    "@aws-cdk/core": "1.76.0"
-  }
+    "@aws-cdk/core": "1.76.0",
+    "@tmigone/vuetify-easy-crud": "^1.6.0",
+    "core-js": "^2.6.5",
+    "firebase": "8.2.6",
+    "grpc": "^1.24.4",
+    "request": "^2.88.2",
+    "vue": "^2.6.10",
+    "vuetify": "^1.5.16",
+    "vuex": "^3.1.1",
+    "vuex-easy-firestore": "^1.34.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/standard"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }

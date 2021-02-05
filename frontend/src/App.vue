@@ -28,7 +28,7 @@
           <list-view :item="props.item"></list-view>
         </template>
         <template v-slot:create-form="props">
-          <create-form></create-form>
+          <create-form :item="props.item"></create-form>
         </template>
         <template v-slot:update-form="props">
           <update-form :item="props.item"></update-form>
@@ -38,7 +38,7 @@
       <!-- VexTable -->
       <vex-table module="players" title="vex-table" :headers="vexHeaders">
         <template v-slot:create-form="props">
-          <create-form></create-form>
+          <create-form :item="props.item"></create-form>
         </template>
         <template v-slot:update-form="props">
           <update-form :item="props.item"></update-form>
@@ -48,7 +48,7 @@
       <!-- VefTable -->
       <vef-table module="playersFirestore" title="vef-table" :headers="vexHeaders">
         <template v-slot:create-form="props">
-          <create-form></create-form>
+          <create-form :item="props.item"></create-form>
         </template>
         <template v-slot:update-form="props">
           <update-form :item="props.item"></update-form>
@@ -65,7 +65,8 @@ import ListView from '@/components/ListView.vue'
 import CreateForm from '@/components/CreateForm.vue'
 import UpdateForm from '@/components/UpdateForm.vue'
 export default {
-  name: 'app',
+  name: 'App',
+
   components: { ListView, CreateForm, UpdateForm },
   data: () => {
     return {

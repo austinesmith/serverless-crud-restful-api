@@ -200,7 +200,12 @@ export class ServerlessCrudApiStack extends cdk.Stack {
     // return for website URL
     new cdk.CfnOutput(this, "URL", {
       description: "publicly accessible url",
-      value: myBucket.bucketWebsiteUrl
+      value: myBucket.bucketWebsiteUrl,
     });
+    // return for cf distro
+    new cdk.CfnOutput(this, "URL", {
+      description: "cloudfront url",
+      value: distribution.distributionDomainName
+    })
   };
 }

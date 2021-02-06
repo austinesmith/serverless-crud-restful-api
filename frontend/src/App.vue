@@ -1,46 +1,31 @@
 <template>
   <v-app>
     <!-- Toolbar -->
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase word-wrap:">
-        <span class="font-weight-bold">SEVERLESS REST API: </span><br>
-        <span>CREATE - READ - UPDATE - DELETE</span>
-      </v-toolbar-title>
+    <v-toolbar app dark lighten>
+      <img src="./assets/awslite.png" height="80%" padding="20px">
+      <v-toolbar-title class="headline text-uppercase">
+        
+        <span>DYNAMIC WEB APPLICATION</span><br>ON SERVERLESS ARCHITECTURE
+      </v-toolbar-title> 
+    <v-toolbar-text>
+    </v-toolbar-text>
       <v-spacer></v-spacer>
-      <v-btn flat href="https://portfolio.austinesmith.com/" target="_self">
-        <span class="mr-m10">RETURN</span>
-        <v-icon>mdi-reply</v-icon>
+      <v-btn color="#fc9b00" href="https://portfolio.austinesmith.com/" target="_self">
+        <span class="mr-m10"><div style="color:black;"><Strong>RETURN</Strong></div></span>
+        <v-icon>open-in-new</v-icon>
       </v-btn>
     </v-toolbar>
-
-    <!-- <v-toolbar
-          
-          dark
-        >
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
-          <v-toolbar-title>Title</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </v-toolbar> -->
 
     <!-- Content -->
     <v-content>
           <v-card
             color="#385F73"
             dark
-            flat
+            elevation="2"
             class="ma-2"
             >
 
-            <v-card-title class="headline">This project consisted of creating a RESTful web API using API Gateway, Lambda, and DynamoDB and then creating a front end in Vue.js to implement it. The purpose is to create a dynamic application with an entirely serverless architecture in using AWS (Amazon Web Services).</v-card-title> 
+            <v-card-title class="headline "><Strong>This project demonstrates a RESTful web API built with API Gateway, Lambda, and DynamoDB.  This web page is an implementation of that API with a static Vue.js application hosted on S3. The result is a dynamic website with a completely serverless architecture fully managed by AWS (Amazon Web Services).</Strong><br></v-card-title>
 
             <v-card
               class="d-flex justify-space-around mb-6"
@@ -53,6 +38,7 @@
           class="pa-2"
           outlined
           tile
+          color="#2d3642"
         >
           <img src="./assets/apigw.png" class="toptopimg">
         </v-card>
@@ -61,6 +47,7 @@
           class="pa-2"
           outlined
           tile
+          color="#252f3c"
         >
           <img src="./assets/lambda.png" class="toptopimg">
         </v-card>
@@ -69,6 +56,7 @@
           class="pa-2"
           outlined
           tile
+          color="#1f2937"
         >
           <img src="./assets/ddb2.png" class="toptopimg">
         </v-card>
@@ -80,21 +68,21 @@
               
 
             <v-card-text>
-              This website is served as a static application powered by the Vue.js JavaScript framework.
-              The user interface was built using a component framework called Vuetify for responsive design.
-              The code uses asynchronous JavaScript to react to user events and deliver dynamic content.
-              The web application is stored on a regional AWS object database called S3 (Simple Storage Service).
+              <br>This website is served as a static application powered by the <Strong>Vue.js</Strong> JavaScript framework.
+              The user interface was built using a material design framework called <Strong>Vuetify</Strong> for responsive web applications.
+              The code uses asynchronous <Strong>JavaScript</Strong> to react to user events and deliver dynamic content.
+              The web application is stored on a regional AWS object database called <Strong>S3</Strong> (Simple Storage Service).
               Both the application and the API are routed to from an AWS Cloudfront distribution for edge caching.
-              AWS API Gateway exceeds at network scaling allowing this architecture to be capable of enormous workloads.
-              Operations used to manage the API's database interactions are divided into separate event triggered AWS Lambda functions.
-              Each Lambda performs a different database operation based on the C.R.U.D. model (Create, Read, Read-all, Update, and Delete).
-              A DynamoDB table is used for it's relaxed NoSQL key/value schema allowing more flexibility in what data can be stored.
-              Route53 was used to create a custom domain for the API Gateway and route records in the AWS hosted zone.
-              All infrastructure used for this project was written as code using Typescript to leverage automation.
-              AWS CDK (Cloud Development Kit) makes it so the AWS Management Console isn't necessary in any stage of development.
-              JSON and REST principles are used to enable a stateless transfer between the presentation and application tiers.
-              Github Actions are used to seamlessly automate the building and deployment of this application on push.
-              NPM (Node Package Manager) and Git are used for configuration management within the application.<br><br>
+              AWS <Strong>API Gateway's</Strong> exceptional network scaling is what allows this architecture to be capable of enormous workloads.
+              Operations used to execute the API's database interactions are divided into separate event triggered AWS <Strong>Lambda</Strong> functions.
+              Each Lambda performs a different database operation based on the <Strong>C.R.U.D.</Strong> model (Create, Read, Read-all, Update, and Delete).
+              A <Strong>DynamoDB Table</Strong> is used for it's relaxed NoSQL key/value schema allowing more flexibility in what data can be stored.
+              <Strong>Route53</Strong> is used to create a custom domain for the API Gateway and route records in the AWS hosted zone.
+              All infrastructure created for this project was written entirely in code using <Strong>Typescript</Strong> to leverage automation.
+              AWS <Strong>CDK</Strong> (Cloud Development Kit) makes it so the AWS Management Console isn't necessary in any stage of development.
+              <Strong>JSON</Strong> and <Strong>RESTful</Strong> standards are used to enable a stateless transfer between the presentation and application tiers.
+              <Strong>Github Actions</Strong> are used to seamlessly automate the building and deployment of this application on push.
+              <Strong>NPM</Strong> (Node Package Manager) and <Strong>Git</Strong> are used for configuration management within the application.<br><br>
 
               <img src="./assets/vue.png" class="topimg">
               <img src="./assets/vuetify.png" class="topimg">
@@ -106,7 +94,7 @@
               <img src="./assets/ddb2.png" class="topimg">
               <img src="./assets/git.png" class="topimg">
               <img src="./assets/ts.png" class="topimg">
-              <img src="./assets/cdk.png" class="topimg">
+              <!-- <img src="./assets/cdk.png" class="topimg"> -->
               <img src="./assets/github.png" class="topimg">
               <img src="./assets/npm.png" class="topimg">
               <img src="./assets/cfn.webp" class="topimg">
@@ -121,159 +109,16 @@
                 >VIEW: GITHUB REPOSITORY</v-btn>
             </v-card-actions>
           </v-card>
-<!-- <template>
-  
 
-  </template>
-
-      <v-row align="center">
-    <v-item-group
-      v-model="window"
-      class="shrink mr-6"
-      mandatory
-      tag="v-flex"
-    >
-      <v-item
-        v-for="n in length"
-        :key="n"
-        v-slot="{ active, toggle }"
-      >
-        <div>
-          <v-btn
-            :input-value="active"
-            icon
-            @click="toggle"
-          >
-            <v-icon>mdi-record</v-icon>
-          </v-btn>
-        </div>
-      </v-item>
-    </v-item-group>
-
-    <v-col>
-      <v-window
-        v-model="window"
-        class="elevation-1"
-        vertical
-      >
-        <v-window-item
-          v-for="n in length"
-          :key="n"
-        >
-          <v-card flat>
-            <v-card-text>
-              <v-row
-                class="mb-4"
-                align="center"
-              >
-                <v-avatar
-                  color="grey"
-                  class="mr-4"
-                ></v-avatar>
-                <strong class="title">Title {{ n }}</strong>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-row>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </v-card-text>
-          </v-card>
-        </v-window-item>
-      </v-window>
-    </v-col>
-  </v-row>
-
-  <template>
-  <v-row align="center">
-    <v-item-group
-      v-model="window"
-      class="shrink mr-6"
-      mandatory
-      tag="v-flex"
-    >
-      <v-item
-        v-for="n in length"
-        :key="n"
-        v-slot="{ active, toggle }"
-      >
-        <div>
-          <v-btn
-            :input-value="active"
-            icon
-            @click="toggle"
-          >
-            <v-icon>mdi-record</v-icon>
-          </v-btn>
-        </div>
-      </v-item>
-    </v-item-group>
-
-    <v-col>
-      <v-window
-        v-model="window"
-        class="elevation-1"
-        vertical
-      >
-        <v-window-item
-          v-for="n in length"
-          :key="n"
-        >
-          <v-card flat>
-            <v-card-text>
-              <v-row
-                class="mb-4"
-                align="center"
-              >
-                <v-avatar
-                  color="grey"
-                  class="mr-4"
-                ></v-avatar>
-                <strong class="title">Title {{ n }}</strong>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-row>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </v-card-text>
-          </v-card>
-        </v-window-item>
-      </v-window>
-    </v-col>
-  </v-row>
-</template> -->
       <!-- VecTable -->
       <vec-table
-        title="Items Table"
+        title="CRUD"
         :items="players"
         :headers="vecHeaders"
         @add-item="addPlayer"
         @update-item="updatePlayer"
         @delete-item="deletePlayer"
-        
+        class="pb-20"
       >
         <template v-slot:list-view="props">
           <list-view :item="props.item"></list-view>
@@ -286,100 +131,12 @@
         </template>
       </vec-table>
 
-      <!-- VexTable -->
-      <vex-table module="players" title="vex-table" :headers="vexHeaders">
-        <template v-slot:create-form="props">
-          <create-form :item="props.item"></create-form>
-        </template>
-        <template v-slot:update-form="props">
-          <update-form :item="props.item"></update-form>
-        </template>
-      </vex-table>
-
-      <!-- VefTable -->
-      <vef-table module="playersFirestore" title="vef-table" :headers="vexHeaders">
-        <template v-slot:create-form="props">
-          <create-form :item="props.item"></create-form>
-        </template>
-        <template v-slot:update-form="props">
-          <update-form :item="props.item"></update-form>
-        </template>
-      </vef-table>
-
-   
-
-
-  <!-- footer -->
-  <template>
-  <v-row align="center">
-    <v-item-group
-      v-model="window"
-      class="shrink mr-6"
-      mandatory
-      tag="v-flex"
-    >
-      <v-item
-        v-for="n in length"
-        :key="n"
-        v-slot="{ active, toggle }"
+      <template
+        
+      ><v-card
+        height="150"
       >
-        <div>
-          <v-btn
-            :input-value="active"
-            icon
-            @click="toggle"
-          >
-            <v-icon>mdi-record</v-icon>
-          </v-btn>
-        </div>
-      </v-item>
-    </v-item-group>
-
-    <v-col>
-      <v-window
-        v-model="window"
-        class="elevation-1"
-        vertical
-      >
-        <v-window-item
-          v-for="n in length"
-          :key="n"
-        >
-          <v-card flat>
-            <v-card-text>
-              <v-row
-                class="mb-4"
-                align="center"
-              >
-                <v-avatar
-                  color="grey"
-                  class="mr-4"
-                ></v-avatar>
-                <strong class="title">Title {{ n }}</strong>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-account</v-icon>
-                </v-btn>
-              </v-row>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </v-card-text>
-          </v-card>
-        </v-window-item>
-      </v-window>
-    </v-col>
-  </v-row>
-</template>
+        </v-card></template>
 
   <!-- footer -->
       <template>
@@ -389,37 +146,67 @@
       absolute
       fixed
       :padless="padless"
-      class="pt-200"
     >
       <v-card
         flat
         tile
         width="100%"
-        class="red lighten-1 text-center"
+              color="#232f3f"
+        class="text-center"
       >
         <v-card-text>
           <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4"
-            icon
+          class="mx-8 white--text"
+          icon
+          href="https://github.com/austinesmith"
+          target="_blank"
+        >
+          <v-icon size="40px"
+            class="my-8"
           >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
+            mdi-github
+          </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="mx-8 white--text"
+          icon
+          href="https://www.linkedin.com/in/austinfosec/"
+          target="_blank"
+        >
+          <v-icon size="40px"
+            class="my-8"
+          >
+            mdi-linkedin
+          </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="mx-8 white--text"
+          icon
+          href="mailto:austinfosec@gmail.com"
+          target="_blank"
+        >
+          <v-icon size="40px"
+            class="my-8"
+          >
+            mdi-email
+          </v-icon>
+        </v-btn>
         </v-card-text>
 
         <v-divider></v-divider>
 
-        <v-card-text class="white--text">
-          Created by Austin Smith — ISC {{ new Date().getFullYear() }}
+        <v-card-text class="grey--text">
+          <strong class="grey--text">Created by Austin Smith</strong> — <a href="https://opensource.org/licenses/ISC">ISC</a> {{ new Date().getFullYear() }}<br><br>
+        <span font-size="200%"><em>powered by:</em></span><br>
+        <img src="./assets/awswhite.png" width="100">
         </v-card-text>
       </v-card>
     </v-footer>
 
-  </v-card>
-</template>
+    </v-card>
+  </template>
 
     </v-content>
   </v-app>
@@ -429,6 +216,7 @@
 import ListView from '@/components/ListView.vue'
 import CreateForm from '@/components/CreateForm.vue'
 import UpdateForm from '@/components/UpdateForm.vue'
+
 export default {
   name: 'App',
 
@@ -473,6 +261,19 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Roboto&family=Source+Sans+Pro&display=swap');
+
+a {
+  color: #000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+    text-decoration: none;
+    color: darken(#000, 30%);
+}
+
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -490,4 +291,23 @@ export default {
   height: 100px; 
   margin: 5px;
 }
+
+.v-toolbar {
+  font-family: 'Lato', sans-serif;
+}
+
+.v-toolbar__title {
+  font-size: 1.2rem !important;
+  font-family: 'Lato', sans-serif;
+  @media (max-width: 599px) {
+      .v-toolbar__title {
+        font-size: 2rem !important;
+      }
+    }
+}
+
+.v-card__title {
+  font-size: 1.4rem !important;
+}
+
 </style>

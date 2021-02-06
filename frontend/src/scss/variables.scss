@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Roboto&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+
+//$body-font-family: 'Poppins', sans-serif;
+$body-font-family: 'Lato', sans-serif;
+$heading-font-family: 'Poppins', sans-serif;
+$base-font-size: 14px;
+$base-font-weight: 400;
+
+
+
+
+header {
+    .v-toolbar__title {
+      font-weight: 300;
+      font-size: small;
+      text-transform: uppercase;
+      @media only screen and (max-width: 599px) {
+        font-weight: 600;
+        font-size: x-small;
+      }
+    }
+}

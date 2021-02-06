@@ -5,7 +5,7 @@
       <img src="./assets/awslite.png" height="80%" padding="20px">
       <v-toolbar-title class="headline text-uppercase">
         
-        <span>DYNAMIC WEB APPLICATION</span><br>ON SERVERLESS ARCHITECTURE
+        <span>SERVERLESS WEB APP</span>
       </v-toolbar-title> 
     <v-toolbar-text>
     </v-toolbar-text>
@@ -112,7 +112,7 @@
 
       <!-- VecTable -->
       <vec-table
-        title="CRUD"
+        title="CRUD DB"
         :items="players"
         :headers="vecHeaders"
         @add-item="addPlayer"
@@ -134,7 +134,7 @@
       <template
         
       ><v-card
-        height="150"
+        height="147"
       >
         </v-card></template>
 
@@ -280,7 +280,7 @@ a:hover {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 
 .topimg {
@@ -297,11 +297,12 @@ a:hover {
 }
 
 .v-toolbar__title {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   font-family: 'Lato', sans-serif;
+  line-height: 2px;
   @media (max-width: 599px) {
       .v-toolbar__title {
-        font-size: 2rem !important;
+        font-size: .4rem !important;
       }
     }
 }

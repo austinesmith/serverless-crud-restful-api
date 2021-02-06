@@ -11,6 +11,7 @@ jobs:
     - run: npm install
     - run: npm run install-lambda-modules
     - run: npm run build
+    - run: npm run build-vue
     - run: cdk synth
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1

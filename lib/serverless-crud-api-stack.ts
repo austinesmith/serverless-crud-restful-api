@@ -4,12 +4,16 @@ import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as apigw from '@aws-cdk/aws-apigateway';
 import * as r53 from '@aws-cdk/aws-route53';
 import * as acm from '@aws-cdk/aws-certificatemanager';
+import * as s3 from '@aws-cdk/aws-s3';
+import * as s3Deployment from '@aws-cdk/aws-s3-deployment';
+import * as cloudfront from '@aws-cdk/aws-cloudfront';
 
 // account specific variables
 const CUSTOM_DOMAIN_NAME = 'crud.austinesmith.com';
 const PROD_HOSTED_ZONE_ID = 'Z0782095OAXYIN3YIA1L';
 const ZONE_NAME = 'austinesmith.com';
 const ACM_CERTIFICATE_ARN = 'arn:aws:acm:us-east-1:055016422806:certificate/4ad6cc2d-2ae0-455a-8780-0898ab441528';
+
 
 export class ServerlessCrudApiStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -152,6 +156,51 @@ export class ServerlessCrudApiStack extends cdk.Stack {
       zone: hostedZone,
       recordName: 'api',
       domainName: customDomain.domainNameAliasDomainName
+    });
+
+    
+    /* * * * * * * * * *
+    / S 3  B U C K E T
+    * * * * * * * * * */
+
+    // create bucket for vue.js app
+    const myBucket = new s3.Bucket(this, "CRUDAPIFrontEnd", {
+      // allow bucket to access to public internet
+      publicReadAccess: true,
+      // switched RemovalPolicy.RETAIN retains the bucket in s3
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+      websiteIndexDocument: "index.html",
+      websiteErrorDocument: "index.html"
+    });
+    // create deployment resource
+    const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
+      // directory of the web asset
+      sources: [s3Deployment.Source.asset("./frontend/dist")],
+      // The S3 bucket to sync the contents of the zip file to.)
+      destinationBucket: myBucket
+    });
+
+
+    /* * * * * * * * * * *
+    / C L O U D F R O N T
+    * * * * * * * * * * */
+
+    // create cloudfront distribution for website
+    const distribution = new cloudfront.CloudFrontWebDistribution(this, 'crud-api-frontend-cd-distribution', {
+      // specify origin
+      originConfigs: [
+        {
+          s3OriginSource: {
+            s3BucketSource: myBucket
+          },
+          behaviors : [ {isDefaultBehavior: true}]
+        }
+      ],
+    });
+    // return for website URL
+    new cdk.CfnOutput(this, "URL", {
+      description: "publicly accessible url",
+      value: myBucket.bucketWebsiteUrl
     });
   };
 }

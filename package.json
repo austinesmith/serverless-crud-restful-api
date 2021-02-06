@@ -43,6 +43,7 @@
     "@aws-cdk/aws-dynamodb": "^1.83.0",
     "@aws-cdk/aws-lambda": "^1.83.0",
     "@aws-cdk/aws-route53": "^1.88.0",
+    "@aws-cdk/aws-s3-deployment": "^1.88.0",
     "@aws-cdk/core": "1.76.0",
     "@mdi/font": "^5.9.55",
     "@mdi/js": "^5.9.55",

@@ -2,7 +2,7 @@
   <v-card>
     <!-- TITLE -->
     <v-card-title>
-      <span class="headline">Add new awesome player</span>
+      <span class="headline">Add a new item</span>
     </v-card-title>
 
     <!-- FORM -->
@@ -11,24 +11,20 @@
         <v-container>
           <v-layout>
             <v-flex xs12 md4>
-              <v-text-field v-model="editableItem.name" label="First name"></v-text-field>
+              <v-text-field v-model="editableItem.name" label="name"></v-text-field>
             </v-flex>
 
             <v-flex xs12 md4>
-              <v-text-field v-model="editableItem.surname" label="Surname"></v-text-field>
+              <v-text-field v-model="editableItem.age" type="number" label="age"></v-text-field>
             </v-flex>
 
             <v-flex xs12 md4>
-              <v-text-field v-model="editableItem.age" type="number" label="Age"></v-text-field>
+              <v-text-field v-model="editableItem.jobtitle" label="jobtitle"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout>
             <v-flex xs12 md6>
-              <v-text-field v-model="editableItem.country" label="Country"></v-text-field>
-            </v-flex>
-
-            <v-flex xs12 md6>
-              <v-text-field v-model="editableItem.club" label="Club"></v-text-field>
+              <v-text-field v-model="editableItem.company" label="company"></v-text-field>
             </v-flex>
           </v-layout>
         </v-container>

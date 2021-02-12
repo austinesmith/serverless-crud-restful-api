@@ -18,14 +18,31 @@
 
     <!-- Content -->
     <v-content>
+      
+   
+        <v-card
+        dark
+        d-flex
+        color="#252f3c"
+        class="pa-2 ma-2 justify-space-around"
+      >
+      
+      <v-row justify="center">
+      <V-card-title>
+        <v-spacer></v-spacer>
+        <span style="color:#fc9801;">Serverless C.R.U.D. Database Demonstration</span>
+      </V-card-title>
+      </v-row>
+      </v-card>
+    
           <v-card
             color="#385F73"
             dark
             elevation="2"
-            class="ma-2"
+            class="mx-2 mt-0 pt-0"
             >
 
-            <v-card-title class="headline "><Strong>This project demonstrates a RESTful web API built with API Gateway, Lambda, and DynamoDB.  This web page is an implementation of that API with a static Vue.js application hosted on S3. The result is a dynamic website with a completely serverless architecture fully managed by AWS (Amazon Web Services).</Strong><br></v-card-title>
+            <v-card-title> <Strong>Summary:</Strong> This project demonstrates a back-end RESTful web API built with API Gateway, Lambda, and DynamoDB.  This front-end is powered by a static Vue.js application hosted on S3. The result is a dynamic website with a completely serverless architecture fully managed by AWS.</v-card-title>
 
             <v-card
               class="d-flex justify-space-around mb-6"
@@ -68,7 +85,7 @@
               
 
             <v-card-text>
-              <br>This website is served as a static application powered by the <Strong>Vue.js</Strong> JavaScript framework.
+              <br><Strong>Description:</Strong> This website is served as a static application powered by the <Strong>Vue.js</Strong> JavaScript framework.
               The user interface was built using a material design framework called <Strong>Vuetify</Strong> for responsive web applications.
               The code uses asynchronous <Strong>JavaScript</Strong> to react to user events and deliver dynamic content.
               The web application is stored on a regional AWS object database called <Strong>S3</Strong> (Simple Storage Service).
@@ -99,8 +116,14 @@
               <img src="./assets/npm.png" class="topimg">
               <img src="./assets/cfn.webp" class="topimg">
               <img src="./assets/aws-route53.svg" class="topimg">
-              <img src="./assets/json.png" class="topimg">
+              <img src="./assets/json.png" class="topimg"><br><br>
 
+              <Strong>Instructions:</Strong> Below is an implementation of a CRUD datebase.  CRUD stands for create, read, update, and delete.
+              The database used is NoSQL so it does not enforce strict rules on how data must be structured.  
+              The back end is implemented such that any key/value attribute can be included with a record, however the front end implementation is expecting a certain kind of data; People.
+              Click the dark blue icon to add a Person to the table.
+              Click the light blue icon to edit a Person already on the table.
+              Click the red icon to delete a Person from the table.
               </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer><v-btn 
@@ -113,11 +136,11 @@
       <!-- VecTable -->
       <vec-table
         title="CRUD DB"
-        :items="players"
+        :items="people"
         :headers="vecHeaders"
-        @add-item="addPlayer"
-        @update-item="updatePlayer"
-        @delete-item="deletePlayer"
+        @add-item="addPerson"
+        @update-item="updatePerson"
+        @delete-item="deletePerson"
         class="pb-20"
       >
         <template v-slot:list-view="props">
@@ -224,37 +247,30 @@ export default {
   data: () => {
     return {
       vecHeaders: [
-        { text: 'Name', value: 'name' },
-        'Surname (not searchable)',
-        { text: 'Age', value: 'age', sortable: true },
-        { text: 'Country', value: 'country' },
-        { text: 'Club', value: 'club', sortable: true }
-      ],
-      vexHeaders: [
         { text: 'ID', value: 'id' },
         { text: 'Name', value: 'name' },
-        'Surname (not shown)',
         { text: 'Age', value: 'age', sortable: true },
-        { text: 'Country', value: 'country' },
-        { text: 'Club', value: 'club', sortable: true }
+        { text: 'Job Title', value: 'jobtitle' },
+        { text: 'Company', value: 'company', sortable: true }
       ],
-      players: [
-        { id: 0, name: 'Lionel', surname: 'Messi', age: 32, country: 'Argentina', club: 'Barcelona' },
-        { id: 1, name: 'Cristiano', surname: 'Ronaldo', age: 34, country: 'Portugal', club: 'Juventus' },
-        { id: 2, name: 'Ramiro', surname: 'Funes Mori', age: 28, country: 'Argentina', club: 'Villareal' }
+      people: [
+        { id: 0, name: 'Joe Dirt', age: 32, jobtitle: 'Custodian', company: 'Auto Trader' },
+        { id: 1, name: 'Adam Deman', age: 26, jobtitle: 'Telemarketer', company: 'Telemericorp' },
+        { id: 3, name: 'Dwight Schrute', age: 45, jobtitle: 'Assistant Regional Manager', company: 'Dunder Mifflin' },
+        { id: 4, name: 'Ron Swanson', age: 44, jobtitle: 'Director', company: 'Parks and Recreation' },
       ]
     }
   },
   methods: {
-    addPlayer: function (player) {
-      player.id = this.players.length
-      this.players.push(player)
+    addPerson: function (person) {
+      person.id = this.people.length
+      this.people.push(person)
     },
-    updatePlayer: function (player) {
-      this.players = this.players.map(i => i.id === player.id ? player : i)
+    updatePerson: function (person) {
+      this.people = this.people.map(i => i.id === person.id ? person : i)
     },
-    deletePlayer: function (player) {
-      this.players = this.players.filter(i => i.id !== player.id)
+    deletePerson: function (person) {
+      this.people = this.people.filter(i => i.id !== person.id)
     }
   }
 }
@@ -262,6 +278,8 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Roboto&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
 
 a {
   color: #000;
@@ -309,6 +327,7 @@ a:hover {
 
 .v-card__title {
   font-size: 1.4rem !important;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 </style>

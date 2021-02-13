@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <v-app>
     <!-- Toolbar -->
@@ -159,7 +160,70 @@
       ><v-card
         height="147"
       >
-        </v-card></template>
+        </v-card>
+        
+        
+        <v-card>
+         <ul>
+    <li v-for="item in shoppingItems" v-bind:key="item.id">
+      {{ item.name }} - {{ item.price }}
+    </li>
+  </ul>
+        </v-card>
+
+        <v-container>
+        <v-card>
+          <ul>
+    <li v-for="item in shoppingItems" v-bind:key="item.id">
+      {{ item.name }} - {{ item.price }}
+    </li>
+  </ul>
+
+          top<br>hello world<br>hello world<br>
+          <!-- iterated through every element and children -->
+          <ul><!-- eslint-disable -->
+  <li v-for="person in people"> 
+    <ul>
+      Person: {{person.id}}
+      <li v-for="(val, index, name) in person">
+            {{name}}. {{index}}: {{val}}
+        </li>
+    </ul>
+  </li>
+</ul>
+<!--
+<li v-for="item in items"> 
+    <ul>
+      item: {{person.id}}
+      <li v-for="(val, index, name) in item">
+            {{name}}. {{index}}: {{val}}
+        </li>
+    </ul>
+  </li>
+</ul> -->
+<!-- now iterated gotten data -->
+
+api.
+
+<!-- got -->
+          
+          hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>hello world<br>
+        </v-card>
+        </v-container>
+        
+        </template>
+  <!-- my implementation
+
+      <v-card v-for="person in people" v-bind:key="person.id">
+        {{ item }}
+        <div v-for="(value, name, index) in object">
+            {{ index }}. {{ name }}: {{ value }}
+        </div>
+      </v-card>
+
+  my implementation -->
+
+
 
   <!-- footer -->
       <template>
@@ -236,9 +300,9 @@
 </template>
 
 <script>
-import ListView from '@/components/ListView.vue'
-import CreateForm from '@/components/CreateForm.vue'
-import UpdateForm from '@/components/UpdateForm.vue'
+import axios from 'axios';
+
+const API_URL = 'https://w497o4ibr7.execute-api.us-east-1.amazonaws.com/dev';
 
 export default {
   name: 'App',
@@ -247,6 +311,8 @@ export default {
   data: () => {
     return {
       vecHeaders: [
+
+
         { text: 'ID', value: 'id' },
         { text: 'Name', value: 'name' },
         { text: 'Age', value: 'age', sortable: true },
@@ -258,21 +324,25 @@ export default {
         { id: 1, name: 'Adam Deman', age: 26, jobtitle: 'Telemarketer', company: 'Telemericorp' },
         { id: 3, name: 'Dwight Schrute', age: 45, jobtitle: 'Assistant Regional Manager', company: 'Dunder Mifflin' },
         { id: 4, name: 'Ron Swanson', age: 44, jobtitle: 'Director', company: 'Parks and Recreation' },
-      ]
+      ],
+
+      items: [],
+      numberOfItems:0
     }
   },
   methods: {
-    addPerson: function (person) {
-      person.id = this.people.length
-      this.people.push(person)
-    },
-    updatePerson: function (person) {
-      this.people = this.people.map(i => i.id === person.id ? person : i)
-    },
-    deletePerson: function (person) {
-      this.people = this.people.filter(i => i.id !== person.id)
+    getItems: function () {
+      const url = `${API_URL}/api/contacts/`;
+      axios.get(url).then(response => response.data).then((data) => {
+        this.items = data.data;
+        this.numberOfItems = data.count;
+      });
     }
-  }
+  },
+
+  mounted() {
+    this.getItems();
+  },
 }
 </script>
 
